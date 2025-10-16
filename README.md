@@ -22,16 +22,17 @@ In this case it will work for Windows PowerShell and Powershell 7. Now simply re
 ## Functions
 
 - **Search-AniLiberty**
-
+  
   Searches AniLiberty for titles (exact or partial match). Returns objects containing at least `id`, `name.main`, `name.english`. Available alias: `sat`.
+  
   ```powershell
   Search-AniLiberty [-Title] <string> [<CommonParameters>]
   ```
 
 - **Get-AniLibertyTorrent**
-
+  
   Retrieves torrent entries for the given release id. By default downloads the .torrent file; with `-OpenMagnetLink` opens the magnet URI. `-PreferHEVC` prefers HEVC codecs with AVC as fallback. Available alias: `gat`.
-
+  
   ```powershell
   Get-AniLibertyTorrent [-ReleaseId] <string> [-PreferHEVC] [-OpenMagnetLink] [<CommonParameters>]
   ```
@@ -44,6 +45,10 @@ Let's search for "91 days" anime title. This will output all matching results.
 
 ```powershell
 Search-AniLiberty -Title "91 days"
+
+# ReleaseId Name (Rus) Name (Eng)
+# --------- ---------- ----------
+#      2621 91 День    91 Days
 ```
 
 **Example 2**
@@ -74,4 +79,3 @@ Search-AniLiberty "Kyoushitsu" | Select-Object -Index 3 | Get-AniLibertyTorrent 
 
 - If no matches are found, `Search-AniLiberty` returns `null`. `Get-AniLibertyTorrent` may throw if no torrent is selected.
 - Use `-Verbose` to see request details and debug output (only for `Get-AniLibertyTorrent`).
-
