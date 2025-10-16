@@ -11,7 +11,7 @@ function Search-AniLiberty {
 
 .PARAMETER Title
     The title to search for.
-    Notes: Exact or partial matches are accepted.
+    Exact or partial matches are accepted.
 
 .EXAMPLE
 
@@ -31,7 +31,7 @@ function Search-AniLiberty {
 
 .NOTES
     Author: qfian
-    Version: 0.1
+    Version: 0.0.1
     LastModified: 2025-10-16
 #>
 
@@ -82,19 +82,16 @@ function Get-AniLibertyTorrent {
 
 .PARAMETER ReleaseId
     The AniLiberty release identifier to query.
-    ValueFromPipelineByPropertyName: True
 
 .PARAMETER PreferHEVC
     If specified, prefer torrents with HEVC codec. If no HEVC torrent is found,
     an x264 torrent will be used as a fallback.
-    Type: SwitchParameter
-    Default: $false
+    SwitchParameter
 
 .PARAMETER OpenMagnetLink
     If specified, opens the selected torrent's magnet link using Start-Process. 
     Otherwise the function downloads the .torrent file to the current directory
-    Type: SwitchParameter
-    Default: $false
+    SwitchParameter.
 
 .EXAMPLE
 
@@ -130,7 +127,7 @@ function Get-AniLibertyTorrent {
 
 .NOTES
     Author: qfian
-    Version: 0.1
+    Version: 0.0.1
     LastModified: 2025-10-16
 #>
 
