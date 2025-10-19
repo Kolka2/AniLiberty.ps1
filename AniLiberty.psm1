@@ -35,6 +35,7 @@ function Search-AniLiberty {
     LastModified: 2025-10-16
 #>
 
+    # TODO: Maybe I should add a switch parameter to change displayed name language?
     [Alias('sat')]
     param (
         [Parameter(Mandatory)]
@@ -60,11 +61,54 @@ function Search-AniLiberty {
     $response | 
         ForEach-Object {
             [PSCustomObject]@{
-              [String]'ReleaseId'  = $_.id
-              [String]'Name (Rus)' = $_.name.main
-              [String]'Name (Eng)' = $_.name.english
+              [string]'ReleaseId'  = $_.id
+              [string]'Name (Rus)' = $_.name.main
+              [string]'Name (Eng)' = $_.name.english
             }
         } 
+}
+
+function Get-AniLibertyDescription {
+
+    [Alias('gad')]
+    param(
+        [Parameter(Mandatory,
+                   ValueFromPipelineByPropertyName)]
+        [string]$ReleaseId
+    )
+
+    begin {
+        $baseUri       = 'https://anilibria.top/api/v1/anime/releases'
+        $includeFields = 'description,name.main'
+        $result = @()
+    }
+
+    process {
+        $params = @{
+            Uri  = "$baseUri/$ReleaseId"
+            Body = @{
+                include = $includeFields
+            }
+            TimeOutSec  = 10
+        }
+        if ($PSVersionTable.PSVersion.Major -ge 6) {
+            $params['MaximumRetryCount'] = 3
+        }
+
+        $response = Invoke-RestMethod @params
+
+        $result += $response | 
+            ForEach-Object {
+                [PSCustomObject]@{
+                    [string]'Name' = $_.name.main
+                    [string]'Desc' = $_.description
+                }
+            }
+    }
+
+    end {
+        $result | Format-Table -Property @{ Expression = 'Name'; Width = 20 }, Desc -Wrap
+    }
 }
 
 function Get-AniLibertyTorrent {
