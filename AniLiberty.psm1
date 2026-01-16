@@ -36,6 +36,7 @@ function Search-AniLiberty {
 #>
 
     # TODO: Maybe I should add a switch parameter to change displayed name language?
+    # Or add param like `-PrettyPrint` that would not imply piping its output to other funcs
     [Alias('sat')]
     param (
         [Parameter(Mandatory)]
@@ -45,7 +46,7 @@ function Search-AniLiberty {
     $IncludeFields = @('id', 'name.main', 'name.english') -Join ','
 
     $params = @{
-        Uri  = 'https://anilibria.top/api/v1/app/search/releases'
+        Uri  = 'https://aniliberty.top/api/v1/app/search/releases'
         Body = @{
             query   = $Title
             include = $IncludeFields
@@ -78,7 +79,7 @@ function Get-AniLibertyDescription {
     )
 
     begin {
-        $baseUri       = 'https://anilibria.top/api/v1/anime/releases'
+        $baseUri       = 'https://aniliberty.top/api/v1/anime/releases'
         $includeFields = 'description,name.main'
         $result = @()
     }
@@ -186,7 +187,7 @@ function Get-AniLibertyTorrent {
     )
 
     begin {
-        $baseUri = "https://anilibria.top/api/v1/anime/torrents"
+        $baseUri = "https://aniliberty.top/api/v1/anime/torrents"
     }
 
     process {
